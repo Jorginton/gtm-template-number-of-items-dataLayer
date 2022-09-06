@@ -1,5 +1,5 @@
 homepage: "https://www.jorgvandeven.nl/"
 documentation: "https://github.com/Jorginton/gtm-template-number-of-items-dataLayer/blob/main/README.md"
 versions:
-  - sha: d133fb5928f2679d8c0a470886a6cdc761d60afe
+  - sha: 958757baf8c8abb48b29a0cde97d38370d69eea3
     changeNotes: First upload.
