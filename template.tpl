@@ -17,7 +17,7 @@ ___INFO___
   ],
   "version": 1,
   "securityGroups": [],
-  "displayName": "template",
+  "displayName": "Return number of e-commerce products",
   "description": "Returns the number products shown on a page by reading the EEC/GA4 Items array.",
   "containerContexts": [
     "WEB"
