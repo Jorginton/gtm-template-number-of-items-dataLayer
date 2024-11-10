@@ -1,24 +1,12 @@
-﻿___TERMS_OF_SERVICE___
-
-By creating or modifying this file you agree to Google Tag Manager's Community
-Template Gallery Developer Terms of Service available at
-https://developers.google.com/tag-manager/gallery-tos (or such other URL as
-Google may provide), as modified from time to time.
-
-
 ___INFO___
 
 {
   "type": "MACRO",
   "id": "cvt_temp_public_id",
-  "categories": [
-    "UTILITY",
-    "TAG_MANAGEMENT"
-  ],
   "version": 1,
   "securityGroups": [],
-  "displayName": "Return number of e-commerce products",
-  "description": "Returns the number products shown on a page by reading the EEC/GA4 Items array.",
+  "displayName": "Return number of items | Ventastic Solutions",
+  "description": "Returns the number products shown on a page by reading the EEC/GA4 Items array. \n\nMade by Jorg van de Ven | Ventastic Solutions.",
   "containerContexts": [
     "WEB"
   ]
@@ -54,6 +42,19 @@ ___TEMPLATE_PARAMETERS___
       }
     ],
     "simpleValueType": true
+  },
+  {
+    "type": "GROUP",
+    "name": "CreatorGroup",
+    "displayName": "Creator",
+    "groupStyle": "ZIPPY_OPEN",
+    "subParams": [
+      {
+        "type": "LABEL",
+        "name": "Creator",
+        "displayName": "Made by \u003cstrong\u003e\u003ca href\u003d\"https://www.linkedin.com/in/jorgvandeven/\"\u003eJorg van de Ven\u003c/a\u003e\u003c/strong\u003e | \u003cstrong\u003e\u003ca href\u003d\"https://www.jorgvandeven.nl/ventastic-solutions?utm_source\u003dgoogle\u0026utm_medium\u003dgtm\u0026utm_campaign\u003dgtm_template_return_number_of_items\"\u003eVentastic Solutions\u003c/a\u003e\u003c/strong\u003e"
+      }
+    ]
   }
 ]
 
@@ -75,9 +76,18 @@ let events = ecommerce.impressions || ecommerce.productClick|| ecommerce.detail 
 
 let ecommerceArray = ecommerce.items || events.products || events || [];
 
-let item_id = ecommerceArray.map(obj => {if (obj.id) {return obj.id;} else {return obj.item_id;}});
+let quantityArray = ecommerceArray.map(obj => obj.quantity);
 
-return ecommerceArray ? item_id.length : 0;
+let idArray = ecommerceArray.map(obj => {if (obj.id) {return obj.id;} else {return obj.item_id;}});
+let idQuantity = quantityArray.some(e => e === undefined) ? idArray.length : 0;
+
+const baseValue = 0;
+const sumQuantity = quantityArray.reduce(
+  (previousValue, currentValue) => previousValue + currentValue,
+  baseValue
+);
+
+return sumQuantity ? sumQuantity : idQuantity;
 
 
 ___WEB_PERMISSIONS___
@@ -90,6 +100,13 @@ ___WEB_PERMISSIONS___
         "versionId": "1"
       },
       "param": [
+        {
+          "key": "allowedKeys",
+          "value": {
+            "type": 1,
+            "string": "specific"
+          }
+        },
         {
           "key": "keyPatterns",
           "value": {
