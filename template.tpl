@@ -11,9 +11,6 @@ ___INFO___
 {
   "displayName": "Return number of items | Ventastic Solutions",
   "categories": ["ADVERTISING", "REMARKETING", "ANALYTICS"],
-}
-
-{
   "type": "MACRO",
   "id": "cvt_temp_public_id",
   "version": 1,
