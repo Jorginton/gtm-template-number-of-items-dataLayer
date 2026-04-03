@@ -73,32 +73,31 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 const copyFromDataLayer = require('copyFromDataLayer');
 let ecommerce;
-
 const selected = data.mapValues;
-
 if (selected === 'auto') {
   ecommerce = copyFromDataLayer('ecommerce', 1) || {};
 } else {
-  ecommerce = data.manual;
+  ecommerce = data.manual || {};
 }
 
-let events = ecommerce.impressions || ecommerce.productClick|| ecommerce.detail || ecommerce.add || ecommerce.remove || ecommerce.checkout || ecommerce.purchase || {};
+let events = ecommerce.impressions || ecommerce.productClick || ecommerce.detail || ecommerce.add || ecommerce.remove || ecommerce.checkout || ecommerce.purchase || {};
+let ecommerceArray = ecommerce.items || events.products || (events.length ? events : []);
 
-let ecommerceArray = ecommerce.items || events.products || events || [];
+if (!ecommerceArray || !ecommerceArray.length) {
+  return 0;
+}
 
 let quantityArray = ecommerceArray.map(obj => obj.quantity);
-
-let idArray = ecommerceArray.map(obj => {if (obj.id) {return obj.id;} else {return obj.item_id;}});
+let idArray = ecommerceArray.map(obj => obj.id ? obj.id : obj.item_id);
 let idQuantity = quantityArray.some(e => e === undefined) ? idArray.length : 0;
 
-const baseValue = 0;
-const sumQuantity = quantityArray.reduce(
-  (previousValue, currentValue) => previousValue + currentValue,
-  baseValue
-);
+let sumQuantity = 0;
+for (let i = 0; i < quantityArray.length; i++) {
+  const q = quantityArray[i] * 1;  
+  if (q === q) sumQuantity += q;  
+}
 
 return sumQuantity ? sumQuantity : idQuantity;
-
 
 ___WEB_PERMISSIONS___
 
